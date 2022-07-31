@@ -32,7 +32,7 @@ namespace BakendProject.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      
         public async Task<IActionResult> Registr(RegistrVM registerVM)
         {
 
