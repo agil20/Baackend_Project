@@ -10,7 +10,7 @@ const handleSetEmail = (ev) => {
 
     formData.append("Email", subscribe.value)
     console.log(formData)
-    axios.post("/home/subscribe", formData).then(() => { alert("nices") }).catch(() => { alert("error") })
+    axios.post("/home/subscribe", formData).then(() => { alert("good") }).catch(() => { alert("error") })
 
 
 }
