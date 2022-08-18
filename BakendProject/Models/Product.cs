@@ -28,7 +28,7 @@ namespace BakendProject.Models
         [NotMapped]
         public IFormFile Photo { get; set; }
 
-
+      
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 

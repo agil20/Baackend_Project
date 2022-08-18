@@ -50,12 +50,12 @@
                 
                   <select  asp-for="CategoryId" class="form-select" asp-items="@ViewBag.Categories" aria-label="Default select example">
                  <option  selected>Open this select menu</option>
-       
+        <span asp-validation-for="CategoryId"></span>
                  </select>
           
                   <select  asp-for="BrandId" class="form-select" asp-items="@ViewBag.Brands" aria-label="Default select example">
         <option  selected>Open this select menu</option>
-       
+        <span asp-validation-for="BrandId"></span>
          </select>
 
           

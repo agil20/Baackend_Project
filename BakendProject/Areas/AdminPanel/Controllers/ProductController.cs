@@ -66,7 +66,16 @@ namespace BakendProject.Areas.AdminPanel.Controllers
         {
             ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name");
             ViewBag.Brands = new SelectList(_context.Brands.ToList(), "Id", "Name");
-
+            if (product.BrandId==0)
+            {
+                ModelState.AddModelError("BrandId", "Bosqoyma");
+                return View();
+            }
+            if (product.CategoryId == 0)
+            {
+                ModelState.AddModelError("CategoryId", "Bosqoyma");
+                return View();
+            }
             if (product.Photo == null)
             {
                 ModelState.AddModelError("Photo", "Bosqoyma");
@@ -78,12 +87,22 @@ namespace BakendProject.Areas.AdminPanel.Controllers
                 View();
 
             }
+          
             if (product.Photo.ValidSize(200))
             {
                 ModelState.AddModelError("Photo", "olcu uygun deyil");
                 return View();
 
             }
+            if (product.Category    == null)
+            {
+                ModelState.AddModelError("Photo", "olcu uygun deyil");
+            }
+            if (product.Brand == null)
+            {
+                ModelState.AddModelError("Photo", "olcu uygun deyil");
+            }
+
 
             Product newProduct = new Product
 
