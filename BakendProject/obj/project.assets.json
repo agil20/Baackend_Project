@@ -9819,11 +9819,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\asus\\Desktop\\BackentLayihesi_Proje\\BakendProject\\BakendProject\\BakendProject.csproj",
+      "projectUniqueName": "C:\\Users\\asus\\Source\\Repos\\Baackend_Project11\\BakendProject\\BakendProject.csproj",
       "projectName": "BakendProject",
-      "projectPath": "C:\\Users\\asus\\Desktop\\BackentLayihesi_Proje\\BakendProject\\BakendProject\\BakendProject.csproj",
+      "projectPath": "C:\\Users\\asus\\Source\\Repos\\Baackend_Project11\\BakendProject\\BakendProject.csproj",
       "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\asus\\Desktop\\BackentLayihesi_Proje\\BakendProject\\BakendProject\\obj\\",
+      "outputPath": "C:\\Users\\asus\\Source\\Repos\\Baackend_Project11\\BakendProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

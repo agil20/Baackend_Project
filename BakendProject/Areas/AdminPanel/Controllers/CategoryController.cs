@@ -1,7 +1,10 @@
 ﻿using BakendProject.DAL;
+using BakendProject.Helper;
 using BakendProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +16,13 @@ namespace BakendProject.Areas.AdminPanel.Controllers
     public class CategoryController : Controller
     {
         private readonly AppDbContext _context;
-
+        private IConfiguration _config;
         public DateTime? Date { get; private set; }
 
-        public CategoryController(AppDbContext context)
+        public CategoryController(AppDbContext context, IConfiguration config = null)
         {
             _context = context;
+            _config = config;
         }
         public IActionResult Index()
         {
@@ -43,7 +47,7 @@ namespace BakendProject.Areas.AdminPanel.Controllers
             bool existNNameCtegory = _context.Categories.Any(x => x.Name.ToLower() == category.Name.ToLower());
             if (existNNameCtegory)
             {
-                ModelState.AddModelError("Name", "Bu adli category Var");
+                return View();
             }
 
 
@@ -57,6 +61,21 @@ namespace BakendProject.Areas.AdminPanel.Controllers
 
             await _context.Categories.AddAsync(newCategory);
             await _context.SaveChangesAsync();
+            List<Subscribe> subscribers = await _context.subscribes.ToListAsync();
+            var token = "";
+            string subject = "Endirim var!";
+            EmailHelper helper = new EmailHelper(_config.GetSection("ConfirmationParam:Email").Value, _config.GetSection("ConfirmationParam:Password").Value);
+            foreach (var receiver in subscribers)
+            {
+                token = $"Salam. yeni Category elave olundu. \n";
+
+                var emailResult = helper.SendNews(receiver.Email, token, subject);
+                continue;
+            }
+            string confirmation = Url.Action("ConfirmEmail", "Account", new
+            {
+                token
+            }, Request.Scheme);
             return RedirectToAction("index");
 
         }

@@ -1,11 +1,13 @@
 ﻿using BakendProject.DAL;
 using BakendProject.Extentions;
+using BakendProject.Helper;
 using BakendProject.Models;
 using BakendProject.ViewModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,12 +22,13 @@ namespace BakendProject.Areas.AdminPanel.Controllers
         private readonly Service service;
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _env;
+        private IConfiguration _config;
 
-        public ProductController(AppDbContext context, IWebHostEnvironment env, Service service)
+        public ProductController(AppDbContext context, IWebHostEnvironment env, Service service, IConfiguration config = null)
         {
             _context = context;
             _env = env;
-            this.service = service;
+            _config = config;
         }
 
         public IActionResult Index(int page = 1, int take = 5)
@@ -105,10 +108,10 @@ namespace BakendProject.Areas.AdminPanel.Controllers
             List<ProductImage> productImages = new List<ProductImage>();
             List<Subscribe> subscribes = _context.subscribes.ToList();
 
-            foreach (var item in subscribes)
-            {
-                service.SendEmailDefault(item.Email);
-            }
+            //foreach (var item in subscribes)
+            //{
+            //    service.SendEmailDefault(item.Email);
+            //}
             ProductImage newProductimages = new ProductImage
             {
 
@@ -120,7 +123,21 @@ namespace BakendProject.Areas.AdminPanel.Controllers
             newProduct.ProductImages=productImages;
             await _context.Products.AddAsync(newProduct);
             _context.SaveChanges();
-          
+            List<Subscribe> subscribers = await _context.subscribes.ToListAsync();
+            var token = "";
+            string subject = "Endirim var!";
+            EmailHelper helper = new EmailHelper(_config.GetSection("ConfirmationParam:Email").Value, _config.GetSection("ConfirmationParam:Password").Value);
+            foreach (var receiver in subscribers)
+            {
+                token = $"Salam. yeni Product elave olundu. \n";
+
+                var emailResult = helper.SendNews(receiver.Email, token, subject);
+                continue;
+            }
+            string confirmation = Url.Action("ConfirmEmail", "Account", new
+            {
+                token
+            }, Request.Scheme);
 
             return RedirectToAction("Index");
         }
