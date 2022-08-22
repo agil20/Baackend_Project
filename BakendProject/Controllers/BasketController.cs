@@ -103,11 +103,17 @@ namespace BakendProject.Controllers
                     ProductCount = basketItem.Count,
                     Price = basketItem.Price,
                 };
+               
+            }
+            else 
+            {
 
+
+                return RedirectToAction("login", "account");
             }
 
-
             return Json(obj);
+
         }
 
 

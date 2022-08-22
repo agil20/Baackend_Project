@@ -148,6 +148,7 @@ removeBtn.forEach(item => {
                 myCount = item.count
             })
             count.innerHTML = myCount
+            
             totalProduct.innerHTML = "$" + total
         } catch (err) {
             alert(err)
